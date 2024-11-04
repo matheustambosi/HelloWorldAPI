@@ -13,8 +13,7 @@ COPY ["HelloWorldAPI.csproj", "HelloWorldAPI/"]
 RUN dotnet restore "./HelloWorldAPI/HelloWorldAPI.csproj"
 COPY . .
 WORKDIR "/src/HelloWorldAPI"
-RUN ls
-RUN dotnet build "./HelloWorldAPI.csproj" -c $BUILD_CONFIGURATION -o /app/build
+RUN dotnet build "HelloWorldAPI.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
