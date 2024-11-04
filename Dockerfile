@@ -11,7 +11,7 @@ ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 
 # Copy the project file and restore dependencies
-COPY ["HelloWorldAPI.csproj", "HelloWorldAPI/"]
+COPY ["HelloWorldAPI/HelloWorldAPI.csproj", "HelloWorldAPI/"]
 RUN dotnet restore "HelloWorldAPI/HelloWorldAPI.csproj"
 
 # Copy the entire project source code
