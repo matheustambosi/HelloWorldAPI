@@ -2,8 +2,8 @@
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
 USER app
 WORKDIR /app
-EXPOSE 8080  # Expose the port for the application
-EXPOSE 8081  # If you plan to use another service or endpoint
+EXPOSE 8080
+EXPOSE 8081
 
 # Use the SDK image to build the application
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
