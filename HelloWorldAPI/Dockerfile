@@ -1,24 +1,31 @@
-#See https://aka.ms/customizecontainer to learn how to customize your debug container and how Visual Studio uses this Dockerfile to build your images for faster debugging.
-
+# Use the ASP.NET runtime as the base image
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
 USER app
 WORKDIR /app
-EXPOSE 8080
-EXPOSE 8081
+EXPOSE 8080  # Expose the port for the application
+EXPOSE 8081  # If you plan to use another service or endpoint
 
+# Use the SDK image to build the application
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["HelloWorldAPI.csproj", "HelloWorldAPI/"]
-RUN dotnet restore "./HelloWorldAPI/HelloWorldAPI.csproj"
+
+# Copy the project file and restore dependencies
+COPY ["HelloWorldAPI/HelloWorldAPI.csproj", "HelloWorldAPI/"]
+RUN dotnet restore "HelloWorldAPI/HelloWorldAPI.csproj"
+
+# Copy the entire project source code
 COPY . .
+
+# Set the working directory to the project directory and build the application
 WORKDIR "/src/HelloWorldAPI"
 RUN dotnet build "HelloWorldAPI.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
+# Publish the application to the /app/publish directory
 FROM build AS publish
-ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "./HelloWorldAPI.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "HelloWorldAPI.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
+# Create the final image from the published output
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
