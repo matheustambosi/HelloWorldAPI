@@ -10,9 +10,10 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["HelloWorldAPI.csproj", "HelloWorldAPI/"]
-RUN dotnet restore "./HelloWorldAPI.csproj"
+RUN dotnet restore "./HelloWorldAPI/HelloWorldAPI.csproj"
 COPY . .
 WORKDIR "/src/HelloWorldAPI"
+RUN ls
 RUN dotnet build "./HelloWorldAPI.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 FROM build AS publish
