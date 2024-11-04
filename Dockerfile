@@ -23,7 +23,7 @@ RUN dotnet build "HelloWorldAPI.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 # Publish the application to the /app/publish directory
 FROM build AS publish
-RUN dotnet publish "HelloWorldAPI.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "HelloWorldAPI.csproj" -c Release -o /app/publish /p:UseAppHost=false
 
 # Create the final image from the published output
 FROM base AS final
