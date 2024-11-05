@@ -12,10 +12,10 @@ COPY ["HelloWorldAPI.csproj", "HelloWorldAPI/"]
 RUN dotnet restore "./HelloWorldAPI/HelloWorldAPI.csproj"
 COPY . .
 WORKDIR "/src/HelloWorldAPI"
-RUN dotnet build "./HelloWorldAPI.csproj" -c Release -o /app/build
+RUN dotnet build "HelloWorldAPI.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "./HelloWorldAPI.csproj" -c Release -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "HelloWorldAPI.csproj" -c Release -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app
