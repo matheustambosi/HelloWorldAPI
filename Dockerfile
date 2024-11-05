@@ -8,7 +8,7 @@ EXPOSE 8081
 
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
-COPY ["HelloWorldAPI.csproj", "HelloWorldAPI/"]
+COPY ["HelloWorldAPI/HelloWorldAPI.csproj", "HelloWorldAPI/"]
 RUN dotnet restore "HelloWorldAPI/HelloWorldAPI.csproj"
 COPY . .
 WORKDIR "/src/HelloWorldAPI"
