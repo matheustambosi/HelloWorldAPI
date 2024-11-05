@@ -20,4 +20,8 @@ RUN dotnet publish "HelloWorldAPI.csproj" -c Release -o /app/publish /p:UseAppHo
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
+
+RUN mkdir -p /app/certificates
+COPY certificates/aspnetapp.pfx /app/certificates
+
 ENTRYPOINT ["dotnet", "HelloWorldAPI.dll"]
