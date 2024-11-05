@@ -25,6 +25,5 @@ COPY --from=publish /app/publish .
 
 RUN mkdir -p /app/certificates
 COPY certificates/aspnetapp.pfx /app/certificates
-RUN ls certificates
 
 ENTRYPOINT ["dotnet", "HelloWorldAPI.dll"]
